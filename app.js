@@ -1,6 +1,7 @@
 const express = require('express')
 
 const app = express()
+app.disable('x-powered-by')
 
 app.use((request, response, next) => {
   console.log("In first middleware")

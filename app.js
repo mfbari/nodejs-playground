@@ -1,10 +1,17 @@
-const http = require('http')
+const express = require('express')
 
-const server = http.createServer((request, response) => {
-  console.log(request.headers)
-  response.setHeader('Content-Type', 'text/html')
-  response.write("Hello World!")
-  response.end()
+const app = express()
+
+app.use((request, response, next) => {
+  console.log("In first middleware")
+  next()
 })
 
-server.listen(7999)
+app.use((request, response, next) => {
+  console.log("In second middleware")
+  response.send("<h1>Hello World!</h1>")
+})
+
+app.listen(7999, () => {
+  console.log('Server is running on port 7999')
+})

@@ -13,7 +13,7 @@ app.use("/add-product", (request, response, next) => {
   response.send("<form action='/product' method='POST'><input type='text' name='title'><button type='submit'>Add Product</button></form>")
 })
 
-app.use("/product", (request, response, next) => {
+app.post("/product", (request, response, next) => {
   console.log("In the /product middleware")
   console.log("request body:", request.body)
   console.log("request body title:", request.body.title)

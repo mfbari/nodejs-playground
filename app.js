@@ -1,13 +1,16 @@
 const path = require('path')
-const rootDir = require('./utils/path')
+const rootDir = require('./util/path')
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const adminRouter = require('./routes/admin')
+const adminRouter = require('./routes/admin').routes
 const shopRouter = require('./routes/shop')
 
 const app = express()
 app.disable('x-powered-by')
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 app.use(bodyParser.urlencoded({
   extended: false

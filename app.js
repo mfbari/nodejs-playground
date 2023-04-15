@@ -12,6 +12,7 @@ app.disable('x-powered-by')
 app.use(bodyParser.urlencoded({
   extended: false
 }))
+app.use(express.static(path.join(rootDir, "public")))
 
 app.use('/admin', adminRouter)
 app.use(shopRouter)

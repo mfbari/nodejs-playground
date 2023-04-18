@@ -1,29 +1,24 @@
-const path = require('path')
-const rootDir = require('./util/path')
-const express = require('express')
-const bodyParser = require('body-parser')
+const path = require('path');
 
-const adminRouter = require('./routes/admin').routes
-const shopRouter = require('./routes/shop')
+const express = require('express');
+const bodyParser = require('body-parser');
 
-const app = express()
-app.disable('x-powered-by')
+const errorController = require('./controllers/error');
+
+const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-app.use(bodyParser.urlencoded({
-  extended: false
-}))
-app.use(express.static(path.join(rootDir, "public")))
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-app.use('/admin', adminRouter)
-app.use(shopRouter)
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((request, response, next) => {
-  response.status(404).sendFile(path.join(rootDir, "views", "404.html"))
-})
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
-app.listen(7999, () => {
-  console.log('Server is running on port 7999')
-})
+app.use(errorController.get404);
+
+app.listen(3000);
